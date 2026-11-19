@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정승원 포트폴리오 · 복잡한 차량 데이터를 직관적인 언어로 번역하다</title>
+<meta name="description" content="정승원 포트폴리오. 직접 만든 OBD2 대시보드, 정비 학습 사이트, 배포한 웹 도구 목록.">
+<link rel="stylesheet" href="motorsport.css">
+<style>
+@page{size:A4;margin:18mm 12mm 16mm;@top-left{content:"정승원 포트폴리오";font-size:9px;color:#777;font-family:sans-serif}@bottom-right{content:counter(page) " / " counter(pages);font-size:9px;color:#777;font-family:sans-serif}}
+section{break-before:page;page-break-before:always}
+section:first-of-type{break-before:auto;page-break-before:auto}
+img{max-height:245mm;object-fit:contain}
+p,li{orphans:3;widows:3}
+.layer.card{break-inside:auto;page-break-inside:auto}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{background:#fff!important;color:#111!important;overflow:visible!important}
+section{background:#fff!important}
+[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+h1,h2,h3{break-after:avoid;page-break-after:avoid}
+figure,.tile,.card,.shot,.tilt{break-inside:avoid}
+.sec-head,.kicker,.lead,.wrap>h2,.wrap>h3,.gallery .count{break-after:avoid;page-break-after:avoid}
+.card,.tile,.shot,.thumb,.body,.open,.addr,.stat,.psr,.steps,.stats,.spec,.checks,.two,.shot-row,.vid,.gallery,.layer,.tools,.more-grid,.tag,.btn,li,blockquote,pre,table,tr,img{break-inside:avoid;page-break-inside:avoid}
+img{max-width:100%;height:auto}
+.hero-strip img,.poster-strip img{filter:none!important}
+.hero-strip figure::after{display:none!important}
+*::before,*::after{mix-blend-mode:normal!important}
+figure.vid{margin:12px 0}
+figure.vid figcaption{font-size:12px;color:#555;margin-top:4px}
+
+@page cover{size:A4;margin:0;@top-left{content:none}@bottom-right{content:none}}
+.cover{page:cover;height:297mm;overflow:hidden;break-after:page;page-break-after:always}
+.cover img{display:block;width:210mm;height:297mm;max-height:none;object-fit:cover;object-position:50% 12%}
+.toc{break-after:page;page-break-after:always;padding-top:4px}
+.toc h2{font:800 26px sans-serif;color:#111;margin:0 0 26px;padding-bottom:12px;border-bottom:2px solid #008ECC}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{break-inside:avoid;display:flex;align-items:baseline;gap:10px;padding:14px 0;border-bottom:1px dotted #bbb;font:400 15px/1.5 sans-serif}
+.toc li .t-num{font:700 13px sans-serif;color:#008ECC;min-width:28px}
+.toc li a{color:#111;text-decoration:none;flex:1}
+.toc li .t-title{display:block}
+.toc li .t-kick{display:block;font-size:12px;color:#777;margin-top:2px}
+.toc li .t-pg{font:700 15px sans-serif;color:#111;margin-left:auto;padding-left:12px}
+</style>
+</head>
+<body>
+<div class="cover"><img src="img/cover.jpg" alt="표지"></div><div class="toc"><h2>목차</h2><ol><li><span class="t-num">01</span><a href="#s1"><span class="t-title">문제의식</span></a><span class="t-pg">6</span></li><li><span class="t-num">02</span><a href="#s2"><span class="t-title">OBD2 프로젝트</span></a><span class="t-pg">8</span></li><li><span class="t-num">03</span><a href="#s3"><span class="t-title">학습 사이트</span></a><span class="t-pg">13</span></li><li><span class="t-num">04</span><a href="#s4"><span class="t-title">사용자 의견 반영</span></a><span class="t-pg">16</span></li><li><span class="t-num">05</span><a href="#s5"><span class="t-title">배운 점과 계획</span></a><span class="t-pg">17</span></li><li><span class="t-num">06</span><a href="#s6"><span class="t-title">직접 만든 도구와 웹사이트</span></a><span class="t-pg">18</span></li></ol></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">정승원 포트폴리오</div>
+    
+  </div>
+  
+</header>
+
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-strip" data-reveal aria-label="자동차 장비 사진">
+      <figure><img src="img/strip_01.jpg" alt="자동차 엔진 사진 1" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_02.jpg" alt="자동차 현가장치 사진" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_03.jpg" alt="자동차 외관 사진" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_04.jpg" alt="작업 장비와 교재 사진" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_05.jpg" alt="자동차 엔진 사진 2" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_06.jpg" alt="OBD2 스캐너 사진" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_07.jpg" alt="자동차 엔진룸 사진" loading="eager" data-zoom></figure>
+    </div>
+  </div>
+  <div class="wrap hero-grid">
+    <div data-reveal>
+      <span class="kicker">PORTFOLIO</span>
+      <h1>복잡한 차량 데이터를 직관적인 언어로 번역하다</h1>
+      <p class="lead" style="margin-top:14px">난해한 고장 코드와 차량 신호를 직관적인 대시보드로 시각화하고, 파편화된 정비 지식을 체계적인 학습 도구로 구축한 기록입니다.</p>
+      <div class="stats">
+        <div class="stat"><b class="count" data-count="17">17</b><span>자체 개발 도구 및 웹사이트</span></div>
+        <div class="stat"><b class="count" data-count="12000">12,000</b><span>고장 코드 데이터 처리</span></div>
+        <div class="stat"><b><span class="count" data-count="14">14</span>/15</b><span>도구 공유 후 스터디원 합격률</span></div>
+      </div>
+      <p class="meta">이름: 정승원 · 작성일: 2026-11-14</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <a class="btn" href="#s2">OBD2 프로젝트 보기</a>
+        <a class="btn ghost" href="#s6">도구 목록 보기</a>
+      </div>
+    </div>
+    <figure class="hero-visual" data-reveal>
+      <img src="img/obd_gauge.jpg" alt="맥북 화면의 그랜저 하이브리드 OBD2 대시보드: 속도계, RPM 게이지, 차량 데이터 패널" loading="eager" data-zoom>
+      <figcaption>그림 1. 자체 개발한 OBD2 대시보드 인터페이스 (속도계·RPM·차량 데이터 실시간 연동)</figcaption>
+    </figure>
+  </div>
+
+<div class="wrap maint" data-reveal>
+  <p class="maint-title">정비하는 나 · 실제 정비 현장 사진과 영상</p>
+  <div class="maint-grid">
+    <figure><img src="img/maint_01.jpg" alt="정비 작업 모습 1" data-zoom></figure>
+    <figure><img src="img/maint_02.jpg" alt="정비 작업 모습 2" data-zoom></figure>
+    <figure><img src="img/maint_03.jpg" alt="정비 작업 모습 3" data-zoom></figure>
+    <figure><img src="img/maint_04.jpg" alt="정비 작업 모습 4" data-zoom></figure>
+    <figure><img src="img/maint_05.jpg" alt="정비 작업 모습 5" data-zoom></figure>
+    <figure><img src="img/maint_06.jpg" alt="정비 작업 모습 6" data-zoom></figure>
+    <figure><img src="img/maint_07.jpg" alt="정비 작업 모습 7" data-zoom></figure>
+    <figure><img src="img/maint_08.jpg" alt="정비 작업 모습 8" data-zoom></figure>
+    <figure><figure class="vid"><img src="img/maint_video_poster.jpg" alt="정비 작업 영상 포스터"><figcaption>▶ 영상은 웹사이트에서 재생됩니다</figcaption></figure></figure>
+    <figure><figure class="vid"><img src="img/maint_video_2_poster.jpg" alt="정비 작업 영상 포스터"><figcaption>▶ 영상은 웹사이트에서 재생됩니다</figcaption></figure></figure>
+    <figure><figure class="vid"><img src="img/maint_video_3_poster.jpg" alt="정비 작업 영상 포스터"><figcaption>▶ 영상은 웹사이트에서 재생됩니다</figcaption></figure></figure>
+    <figure><figure class="vid"><img src="img/maint_video_4_poster.jpg" alt="정비 작업 영상 포스터"><figcaption>▶ 영상은 웹사이트에서 재생됩니다</figcaption></figure></figure>
+    <figure><figure class="vid"><img src="img/maint_video_5_poster.jpg" alt="정비 작업 영상 포스터"><figcaption>▶ 영상은 웹사이트에서 재생됩니다</figcaption></figure></figure>
+  </div>
+</div>
+</div>
+
+<div class="poster-strip" aria-label="Motorsport poster series">
+  <figure><img src="poster/p1-audi.jpg" alt="1993 Audi 80 Quattro DTM poster"><figcaption>Audi '93</figcaption></figure>
+  <figure><img src="poster/p2-calsonic.jpg" alt="1994 Calsonic Nissan GT-R R32 poster"><figcaption>Calsonic '94</figcaption></figure>
+  <figure><img src="poster/p3-rsr.jpg" alt="1997 RS-R Nissan Silvia S14 poster"><figcaption>RS★R '97</figcaption></figure>
+  <figure><img src="poster/p4-skyline.jpg" alt="1996 ZEXEL Nissan Skyline GT-R poster"><figcaption>Skyline '96</figcaption></figure>
+  <figure><img src="poster/p5-jun.jpg" alt="1996 JUN Auto Mechanic R33 poster"><figcaption>JUN '96</figcaption></figure>
+</div>
+
+<!-- 01 -->
+<section id="s1">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">01 · 문제의식</span>
+      <h2>고장 코드는 출발점이지만, 원인까지는 알려 주지 않습니다</h2>
+    </div>
+    <div data-reveal>
+      <p>정비 현장에서 고장 코드는 원인을 찾는 출발점입니다. 그러나 코드 하나가 여러 원인을 가리킬 수 있어, 실제 신호가 어떤 순서로 바뀌었는지 확인하는 절차가 필요합니다.</p>
+      <p>저는 이 확인 과정을 차량 데이터 화면으로 풀어 보고 싶었습니다. 차량이 보내는 값을 사람이 한눈에 볼 수 있으면, 정비 지식과 데이터를 함께 보며 원인 후보를 좁힐 수 있다고 생각했습니다.</p>
+    </div>
+    <div class="q" data-reveal>
+      <small>이 프로젝트가 묻는 질문</small>
+      차량이 보내는 데이터를 정비사가 바로 이해할 수 있는 말로 바꿀 수 있는가?
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="s2" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">02 · OBD2 프로젝트</span>
+      <h2>그랜저 하이브리드 OBD2 대시보드</h2>
+      <p class="lead" style="margin-top:10px">차량의 OBD2 단자에서 값을 읽어 맥북 화면에 표시하는 개인 프로젝트입니다. 속도계, RPM 게이지, 센서값을 한 화면에 배치했습니다.</p>
+    </div>
+
+    <div class="two" style="grid-template-columns:1fr">
+      <div class="layer card" data-reveal>
+        <dl class="spec">
+          <dt>역할</dt><dd>혼자 기획·구현</dd>
+          <dt>화면 구성</dt><dd>속도계 · RPM 게이지 · 센서값 패널</dd>
+          <dt>데이터</dt><dd>고장 코드 약 12,000개 처리</dd>
+          <dt>연결 방식</dt><dd>블루투스 BLE</dd>
+        </dl>
+        <p style="margin-top:16px"><a class="btn ghost" href="https://youtube.com/shorts/UOFy1AEICnU" target="_blank" rel="noopener">▶ 시연 영상 보기 (YouTube)</a></p>
+      </div>
+    </div>
+
+    <h3 style="margin:36px 0 14px" data-reveal>대시보드와 실제 차량 계기판</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_app_1.jpg" alt="OBD2 대시보드 프로그램 대시보드 화면" data-zoom>
+        <figcaption>그림 1. 대시보드 화면 (프로그램 실행 화면)</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_cluster.jpg" alt="실제 차량 계기판의 하이브리드 화면" data-zoom>
+        <figcaption>그림 2. 실제 차량 계기판 (하이브리드 화면)</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>실제 프로그램 화면 (고해상도 캡쳐)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot">
+        <img src="img/obd_app_1.jpg" alt="OBD2 대시보드 프로그램 실제 화면 1" data-zoom>
+        <figcaption>그림 3. 프로그램 실제 화면 (1)</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_app_2.jpg" alt="OBD2 대시보드 프로그램 실제 화면 2" data-zoom>
+        <figcaption>그림 4. 프로그램 실제 화면 (2)</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>테마별 화면과 고장 코드 조회 (고해상도 캡쳐)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot">
+        <img src="img/obd_theme_nsx.jpg" alt="OBD 프로그램 NSX-R 카본 테마 화면" data-zoom>
+        <figcaption>그림 5. 테마 'NSX-R 카본' 화면</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_theme_80s.jpg" alt="OBD 프로그램 80s LCD 테마 화면" data-zoom>
+        <figcaption>그림 6. 테마 '80s LCD' 화면</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_theme_typer.jpg" alt="OBD 프로그램 Type R 화이트 테마 화면" data-zoom>
+        <figcaption>그림 7. 테마 'Type R 화이트' 화면</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_theme_80s_dtc.jpg" alt="80s LCD 테마에서 고장 코드 P0420이 조회된 화면" data-zoom>
+        <figcaption>그림 8. 고장 코드 조회 결과 (80s LCD, P0420)</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_theme_jgtc_dtc.jpg" alt="JGTC 다이얼 테마에서 고장 코드 P0420이 조회된 화면" data-zoom>
+        <figcaption>그림 9. 고장 코드 조회 결과 (JGTC 다이얼, P0420)</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_theme_lancia_dtc.jpg" alt="란치아 블루 테마에서 고장 코드 P0420이 조회된 화면" data-zoom>
+        <figcaption>그림 10. 고장 코드 조회 결과 (란치아 블루, P0420)</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/obd_apps.jpg" alt="OBD 프로그램 실행 앱 아이콘" data-zoom>
+        <figcaption>그림 11. 프로그램 실행 앱 아이콘</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>연결 과정: 원인을 나누어 확인했습니다</h3>
+    <p class="muted" data-reveal>처음에는 OBD2 단자를 꽂으면 맥북에 바로 연결될 것이라고 생각했습니다. 하지만 맥북에서도, 대시보드 프로그램에서도 연결되지 않았습니다.</p>
+    <ol class="steps" style="margin-top:16px" data-reveal>
+      <li>같은 방법을 반복하지 않고, 단자 · 맥북 · 프로그램 중 어디가 원인인지 나누어 생각했습니다.</li>
+      <li>같은 팀이었던 정비 경력이 있는 팀원에게 조언을 구했습니다. 맥북은 호환되는 전용 OBD 단자가 필요하다는 내용이었습니다.</li>
+      <li>연결 방식을 블루투스 BLE 방식으로 바꾸었고, 맥북과 프로그램 모두 정상적으로 연결되었습니다.</li>
+    </ol>
+    <div class="card" style="margin-top:8px" data-reveal>
+      <p style="margin:0">방식을 바꾸는 것은 계획을 버리는 일이 아니었습니다. 차량 데이터를 화면에서 확인한다는 목표를 지키기 위한 선택이었습니다.</p>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>결과: 실험 차량으로 고장 코드를 확인했습니다</h3>
+    <div class="two" data-reveal>
+      <div class="card gauge-demo" style="justify-content:space-around">
+        <div>
+          <div class="rpm" id="rpm" style="--p:0"><span><span id="rpmVal">0</span><small>RPM × 1000</small></span></div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <p class="muted" style="margin-bottom:6px">RPM 게이지를 눌러 값을 바꿔 볼 수 있습니다.</p>
+          <input type="range" id="rpmRange" min="0" max="7" step="0.1" value="0" aria-label="RPM 조절" style="width:100%;accent-color:var(--accent)">
+        </div>
+      </div>
+      <div class="card">
+        <p style="margin-bottom:6px"><b>실험 차량에 고장을 일부러 낸 뒤 고장 코드를 읽었습니다.</b></p>
+        <p class="muted">엔진 고장 코드가 단번에 나왔습니다. 고장 코드 약 12,000개 데이터도 처리했습니다.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div><span class="tag green">확인한 고장</span><br><b>엔진 고장 코드 단번에 판독</b></div>
+          <div><span class="tag">입력 데이터</span><br><b class="count"><span data-count="12000">12,000</span>개 고장 코드</b></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>다음 단계: 내비게이션을 설계하고 있습니다 (진행 중)</h3>
+    <div class="card" data-reveal>
+      <p>현재 위치 표시, 목적지 검색, 경로 안내를 목표로 설계 문서를 작성했습니다. <b>아직 구현하지 않은 계획입니다.</b></p>
+      <ul class="checks">
+        <li>위치 소스: 맥북 Wi-Fi 위치는 주행 중 오차가 커서, 스마트폰 GPS 연동을 우선 검토합니다.</li>
+        <li>속도 교차 검증: GPS 속도와 OBD2 속도를 비교해 터널이나 도심의 GPS 오차에 대비합니다.</li>
+        <li>주행 중 조작 최소화: 큰 글씨 안내와 음성만 쓰고, 목적지 입력은 정차 시에만 허용합니다.</li>
+      </ul>
+      <p class="muted" style="margin:14px 0 6px">단계별 진행률 (계획 기준)</p>
+      <div class="bar amber" style="--w:20%"><span data-w="20%"></span></div>
+      <p class="muted" style="font-size:14px;margin:0">5단계 중 1단계: 지도 표시와 현재 위치 마커를 시작 단계로 두었습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">03 · 학습 사이트</span>
+      <h2>틀린 문제를 그림으로 이해하도록 만든 학습 도구</h2>
+      <p class="lead" style="margin-top:10px">해설을 글로만 읽으면 장치가 어떻게 움직이는지 그려지지 않았습니다. 그래서 문제를 틀리면 이미지 설명이 자동으로 나오는 사이트를 직접 만들었습니다.</p>
+    </div>
+
+    <div class="study">
+      <article class="layer card" data-reveal>
+        <span class="tag">직접 제작·배포</span> <span class="tag purple">정비산업기사</span>
+        <h3 style="margin:8px 0 6px">정비 기출 노트</h3>
+        <p>구조도(MDPS 모터 위치)와 사진 갤러리를 붙였고, 틀린 문제가 복습 대기 목록으로 다시 나오도록 했습니다. 학습 홈에서는 영역별 숙련도와 복습 대기 문제 수를 한눈에 볼 수 있습니다.</p>
+        <div class="shot-row" style="margin-top:14px">
+          <figure class="shot"><img src="img/note_home.jpg" alt="정비 기출 노트 학습 홈: 영역별 숙련도와 복습 대기 문제" data-zoom><figcaption>학습 홈 (영역별 숙련도, 복습 대기)</figcaption></figure>
+          <figure class="shot"><img src="img/note_study.jpg" alt="문제 풀이 화면: 혼합비와 배출가스 그래프" data-zoom><figcaption>문제 풀이 (혼합비·배출가스 그래프)</figcaption></figure>
+          <figure class="shot"><img src="img/note_structure.jpg" alt="구조도: MDPS 모터 위치" data-zoom><figcaption>구조도 (MDPS 모터 위치)</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="layer card" data-reveal>
+        <span class="tag">직접 제작·배포</span> <span class="tag purple">정비산업기사</span>
+        <h3 style="margin:8px 0 6px">정비산업기사 기출 풀이</h3>
+        <p>과목별로 문제를 고르고, 문제 원본 이미지와 3D 해설을 함께 보여 줍니다. 틀린 문제와 복습 통계를 자동으로 모아, 복습할 문제를 따로 정리하지 않아도 다시 나오도록 했습니다.</p>
+        <div class="shot-row" style="margin-top:14px">
+          <figure class="shot"><img src="img/dr_cockpit.jpg" alt="정비산업기사 기출 풀이 사이트 화면" data-zoom><figcaption>과목별 문제 풀이 화면</figcaption></figure>
+        </div>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:24px" data-reveal>
+      <p style="margin-bottom:6px"><b>동기들과 나눈 뒤, 자동차진단평가사 2급 필기에서 15명 중 14명이 합격했습니다.</b></p>
+      <p class="muted" style="margin:0">이 결과가 사이트만의 효과라고 단정할 수는 없습니다. 다만 저는 정답을 외우기보다 원리를 직접 확인할 수 있는 학습 도구가 필요하다는 것을 배웠습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="s4" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">04 · 사용자 의견 반영</span>
+      <h2>종이책을 원하는 사용자의 의견을 기능으로 반영했습니다</h2>
+      <p class="lead" style="margin-top:10px">한 사용자가 눈이 침침해 화면을 오래 보기 어렵다며 책으로 공부하겠다고 했습니다. 저는 반대하지 않고 불편한 점을 물었고, 그 의견을 항목으로 나누었습니다.</p>
+    </div>
+
+    <div class="reflect">
+      <div class="card" data-reveal><span class="tag amber">반영 1</span><h3>다크모드</h3><p class="muted">밝기를 자기 눈에 맞게 바꿀 수 있도록 넣었습니다.</p></div>
+      <div class="card" data-reveal><span class="tag amber">반영 2</span><h3>글꼴 크기 조절</h3><p class="muted">오래 보기 어려운 사용자도 글자 크기를 조절할 수 있습니다.</p></div>
+      <div class="card" data-reveal><span class="tag green">결과</span><h3>종이보다 태블릿</h3><p class="muted">종이보다 태블릿 화면을 보는 시간이 늘었다고 알려 왔습니다.</p></div>
+    </div>
+
+    <div class="demo" data-reveal aria-label="다크모드와 글꼴 크기 체험">
+      <div class="demo-controls">
+        <label><input type="checkbox" id="darkToggle"> 다크모드 켜기</label>
+        <label>글꼴 크기 <input type="range" id="fsRange" min="15" max="24" value="17" aria-label="글꼴 크기"> <span id="fsVal">17</span>px</label>
+      </div>
+      <div class="demo-text" id="demoText">
+        <h4>체험 문단 (예시 문장)</h4>
+        <p>혼합비가 희박해지면 연소 온도가 올라가 질소산화물(NOx)이 늘어날 수 있습니다. 이 문단을 키우거나 어둡게 바꾸어 보며, 자기 눈에 맞는 설정을 찾을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:18px">이 결과가 사이트만의 효과라고 단정할 수는 없습니다. 같은 사용자는 자동차진단평가사 2급 필기와 실기에 합격했다고 알려 왔습니다.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="wrap two" style="grid-template-columns:1fr">
+    <div data-reveal>
+      <span class="kicker">05 · 배운 점과 계획</span>
+      <h2 style="margin-bottom:18px">원인을 나누어 확인하고, 다른 의견을 기능으로 바꾸는 방법을 익혔습니다</h2>
+      <ul class="plan" style="margin:0">
+        <li>문제가 생기면 같은 방법을 반복하지 않고, 원인을 나누어 확인합니다.</li>
+        <li>정답을 외우기보다 원리를 확인할 수 있는 도구가 필요하다는 것을 배웠습니다.</li>
+        <li>다른 의견을 먼저 이해하고, 그것을 실제로 쓸 수 있는 기능으로 바꾸는 것이 함께 성장하는 방법이라고 생각합니다.</li>
+      </ul>
+    </div>
+    <div class="card" data-reveal>
+      <h3 style="margin-bottom:10px">앞으로 하고 싶은 일</h3>
+      <ul class="checks">
+        <li>센서 데이터를 쉽게 정리하는 방법과 AI 모델을 차량 데이터에 연결하는 방법 배우기</li>
+        <li>고장 원인 후보를 근거와 함께 설명하도록 만드는 과정 익히기</li>
+        <li>고장 데이터와 정비 자료를 연결한 진단 설명 프로토타입 만들기</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">06 · 직접 만든 도구와 웹사이트</span>
+      <h2>배포된 도구·사이트 전체 목록</h2>
+      <p class="lead" style="margin-top:10px">인터넷 주소로 바로 열 수 있는 도구는 카드를 눌러 바로 열 수 있습니다.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="분류 필터" data-reveal>
+      <button type="button" data-filter="all" aria-pressed="true">전체</button>
+      <button type="button" data-filter="study" aria-pressed="false">학습</button>
+      <button type="button" data-filter="web" aria-pressed="false">웹사이트·도구</button>
+      <button type="button" data-filter="app" aria-pressed="false">호스팅 앱</button>
+      <button type="button" data-filter="car" aria-pressed="false">차량 데이터</button>
+    </div>
+
+    <div class="tools" id="tools">
+
+      <!-- 대표 작업 -->
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/GreenAicarmechanic1020/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/note_home.jpg" alt="정비 기출 노트 학습 홈 화면"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>정비 기출 노트</h3><p>기출 문제 풀이, 틀린 문제의 이미지 설명, 구조도·사진 갤러리</p><ul class="psr"><li><b>문제</b>정비 기출 노트 학습 중 원리가 글로만 적혀 있어 장치 동작이 그려지지 않았습니다.</li><li><b>해결</b>틀린 문제에 맞는 이미지 설명을 자동으로 띄우고, 구조도(MDPS 모터 위치)와 배출가스 그래프를 함께 넣었습니다.</li><li><b>결과</b>학습 홈에서 복습 대기 문제 수와 영역별 숙련도를 한눈에 볼 수 있습니다.</li></ul><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/GreenAicarmechanic1020/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/dr_cockpit_web/web/index.html" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/dr_cockpit.jpg" alt="정비산업기사 기출 풀이 화면"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>정비산업기사 기출 풀이</h3><p>과목별 문제 풀이, 원본 이미지, 3D 해설, 복습 통계</p><ul class="psr"><li><b>문제</b>해설을 글로만 읽으면 정답이 왜 맞는지 그려지지 않았습니다.</li><li><b>해결</b>과목별로 문제를 고르고 원본 이미지와 3D 해설을 함께 보여 줍니다.</li><li><b>결과</b>틀린 문제와 복습 통계가 자동으로 모여, 복습 문제를 따로 정리하지 않아도 다시 나옵니다.</li></ul><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/dr_cockpit_web/web/index.html</span></div>
+      </a>
+      <article class="tile" data-cat="study">
+        <div class="thumb"><img src="img/book_cover.jpg" alt="직접 만든 자동차정비산업기사 공부 책 표지" data-zoom></div>
+        <div class="body"><span class="tag purple">학습</span><h3>직접 만든 정비산업기사 공부 책</h3><p>자동차정비산업기사 시험 준비를 위해 직접 정리한 실물 책. 표지, 목차, 엔진 구조도 등 내부 페이지를 사진으로 보여 줍니다.</p><span class="open ghost">실물 책 · 사진으로 보기</span><a class="open" href="book/book_body.pdf" target="_blank" rel="noopener">완성본 PDF 148쪽 보기 →</a><a class="open" href="book/book_cover.pdf" target="_blank" rel="noopener">표지 PDF 보기 →</a><div class="book-strip" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px"><img src="img/book_r25.jpg" alt="공부 책 내지 1" data-zoom><img src="img/book_engine.jpg" alt="공부 책 엔진 구조도 페이지" data-zoom><img src="img/book_contents.jpg" alt="공부 책 목차 페이지" data-zoom><img src="img/book_photo_1.jpg" alt="공부 책 작업 사진 1" data-zoom><img src="img/book_photo_2.jpg" alt="공부 책 작업 사진 2" data-zoom></div></div>
+      </article>
+      <article class="tile featured" data-cat="car">
+        <span class="badge">대표 프로젝트</span>
+        <div class="thumb"><img src="img/obd_cluster.jpg" alt="그랜저 하이브리드 OBD2 대시보드 화면"></div>
+        <div class="body"><span class="tag green">차량 데이터 · 맥북 앱</span><h3>그랜저 하이브리드 OBD2 대시보드</h3><p>OBD2 값을 속도계·RPM 게이지·센서 패널로 표시. 고장 코드 약 12,000개 처리.</p><ul class="psr"><li><b>문제</b>맥북과 OBD2 블루투스 단자가 연결되지 않았습니다.</li><li><b>해결</b>단자·맥북·프로그램 중 원인을 나눠 확인하고, 연결 방식을 블루투스 BLE로 바꿨습니다.</li><li><b>결과</b>맥북과 프로그램이 연결되어 속도계·RPM 게이지·센서 값을 한 화면에 표시하고, 고장 코드 약 12,000개 데이터를 처리했습니다.</li></ul><a class="open" href="https://youtube.com/shorts/UOFy1AEICnU" target="_blank" rel="noopener">시연 영상 보기 →</a><span class="addr">youtube.com/shorts/UOFy1AEICnU</span></div>
+      </article>
+      <a class="tile" data-cat="app" href="https://genai-app-dr-9100diagnosticconsole-1-178627094570-703848041581.us-central1.run.app/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/dr9180.jpg" alt="DR-9180 Diagnostic Console 실제 화면" data-zoom></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>DR-9180 Diagnostic Console</h3><p>올인원 자동차 진단 웹 애플리케이션</p><span class="open">바로 열기 →</span><span class="addr">Cloud Run에 배포된 웹 앱</span></div>
+      </a>
+
+      <details class="more" open>
+        <summary>기타 도구 보기 (학습·웹·호스팅 앱·차량 데이터)</summary>
+        <div class="tools more-grid">
+      <a class="tile" data-cat="study" href="https://car-appraiser-study0902.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/appraiser.jpg" alt="자동차진단평가사 2급 학습 사이트 화면"></div>
+        <div class="body"><span class="tag purple">학습 · 모바일</span><h3>자동차진단평가사 2급 학습 사이트</h3><p>진단평가사 2급 필기 대비 문제 풀이 사이트</p><span class="open">바로 열기 →</span><span class="addr">car-appraiser-study0902.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/2025caraptest0901/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/carlab.jpg" alt="CarLab 인터랙티브 자동차 정비 학습 화면"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>CarLab</h3><p>인터랙티브 자동차 정비 학습 사이트</p><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/2025caraptest0901/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/engine-atlas/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/engine_car.jpg" alt="르노코리아 엔진 도감 차종별 탭"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>르노코리아 엔진 도감</h3><p>차종별·엔진별로 구분해 보는 엔진 정보 도감</p><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/engine-atlas/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/sonata-6at-simulator/sonata-6at.html" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/sonata.jpg" alt="쏘나타 6AT 시뮬레이터 화면"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>쏘나타 6AT 시뮬레이터</h3><p>쏘나타 6AT 변속 과정을 보는 시뮬레이터</p><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/sonata-6at-simulator/sonata-6at.html</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/hunter-association/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/hunter.jpg" alt="헌터협회 사이트 화면"></div>
+        <div class="body"><span class="tag purple">학습</span><h3>헌터협회 사이트</h3><p>헌터협회 웹사이트</p><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/hunter-association/</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://alexa97busan.github.io/gemini-watermark-remover/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/gemini.jpg" alt="Gemini 워터마크 제거 웹 도구 화면"></div>
+        <div class="body"><span class="tag teal">웹 도구</span><h3>Gemini 워터마크 제거</h3><p>이미지의 워터마크를 제거하는 웹 도구</p><span class="open">바로 열기 →</span><span class="addr">alexa97busan.github.io/gemini-watermark-remover/</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://rug-swipe-16549781.figma.site" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/drawn.jpg" alt="DRAWN from life 디자인 웹사이트 화면"></div>
+        <div class="body"><span class="tag teal">웹사이트</span><h3>DRAWN from life</h3><p>디자인 작업을 모아 보여 주는 웹사이트</p><span class="open">바로 열기 →</span><span class="addr">rug-swipe-16549781.figma.site</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://paintandbodycbtstudio1.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/paint_cbt.jpg" alt="Body And Painting CBT 연습 웹앱 화면"></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>Body And Painting CBT</h3><p>CBT(컴퓨터 기반 시험) 연습 웹앱</p><span class="open">바로 열기 →</span><span class="addr">paintandbodycbtstudio1.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://recall-navigator-aid.lovable.app" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/autoexam.jpg" alt="AutoExam 2급 웹앱 화면"></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>AutoExam 2급</h3><p>자격 시험 대비 학습 웹앱</p><span class="open">바로 열기 →</span><span class="addr">recall-navigator-aid.lovable.app</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://bodypanelmaster08.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/panel.jpg" alt="자동차 차체 패널 마스터 화면"></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>자동차 차체 패널 마스터</h3><p>차체 패널 관련 학습 웹앱</p><span class="open">바로 열기 →</span><span class="addr">bodypanelmaster08.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://autocasefile-7bvr4vcu.manus.space" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/casefile.jpg" alt="AUTO CASE FILE 사례 정리 웹앱 화면"></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>AUTO CASE FILE</h3><p>자동차 사례 정리 웹앱</p><span class="open">바로 열기 →</span><span class="addr">autocasefile-7bvr4vcu.manus.space</span></div>
+      </a>
+      <a class="tile" data-cat="car" href="https://obd2carmainten.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/obd_sim.jpg" alt="가상 OBD 시뮬레이터 MFD-800 화면"></div>
+        <div class="body"><span class="tag green">차량 데이터</span><h3>가상 OBD 시뮬레이터 (MFD-800)</h3><p>OBD 값을 가상으로 확인하는 시뮬레이터</p><span class="open">바로 열기 →</span><span class="addr">obd2carmainten.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://carmainver20807.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/advisor.jpg" alt="차량 정비 어드바이저 화면"></div>
+        <div class="body"><span class="tag amber">호스팅 앱</span><h3>차량 정비 어드바이저</h3><p>차량 정비 관련 안내 웹앱</p><span class="open">바로 열기 →</span><span class="addr">carmainver20807.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://service-879810949744.us-west1.run.app" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/fuel.jpg" alt="주행비용 계산기 화면"></div>
+        <div class="body"><span class="tag teal">웹 도구</span><h3>주행비용 계산기</h3><p>차량 주행 비용을 계산하는 도구</p><span class="open">바로 열기 →</span><span class="addr">service-879810949744.us-west1.run.app</span></div>
+      </a>
+      <article class="tile" data-cat="car">
+        <div class="thumb"><img src="img/video_main.jpg" alt="영상 분석 도구 메인 화면"></div>
+        <div class="body"><span class="tag green">차량 데이터 · 로컬</span><h3>영상 분석 도구</h3><p>영상 파일을 분석하는 도구</p><span class="open ghost">로컬 실행 전용</span><span class="addr none">로컬 서버에서 실행 (외부 주소 없음)</span></div>
+      </article>
+        </div>
+      </details>
+    </div>
+    <p class="local-note">※ 1인가구 지도, 중고차 시세 조사 자료 등은 도구가 아니라 데이터 정리 결과물이라 이 목록에서 제외했습니다.</p>
+    <h3 style="margin:40px 0 14px" data-reveal>영상 분석 도구 화면 (고해상도 캡쳐)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot">
+        <img src="img/video_main.jpg" alt="영상 분석 도구 메인 화면 (YouTube 주소 입력)" data-zoom>
+        <figcaption>그림 12. 메인 화면: YouTube 주소 입력</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/video_result.jpg" alt="영상 분석 도구 분석 결과 화면" data-zoom>
+        <figcaption>그림 13. 분석 결과 화면</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/video_rewrite.jpg" alt="영상 분석 도구 다시 쓰기 화면" data-zoom>
+        <figcaption>그림 14. 다시 쓰기 화면: 용도와 분량 선택</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">정승원 포트폴리오 · 작성일 2026-11-14 · 이름: 정승원</div>
+</footer>
+
+
+
+
+</body>
+</html>
