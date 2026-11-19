@@ -42,9 +42,24 @@
 .mp-cap b{display:block;margin-top:8px;font-size:13px;line-height:1.35;color:#1a1a1a}
 .mp-cap em{display:block;margin-top:4px;font-style:normal;font-size:11px;color:#6b6b72}
 @media (max-width:720px){.mp-grid{grid-template-columns:1fr}.mp-card{border-right:0;border-bottom:1px solid #7E3AF2}.mp-card:last-child{border-bottom:0}.mp-media{aspect-ratio:4/3}}
+.mp-profile{display:flex;gap:0;border:1px solid #7E3AF2;background:#fff;margin-bottom:14px}
+.mp-face{margin:0;flex:0 0 180px;width:180px}
+.mp-face img{width:100%;height:100%;min-height:200px;object-fit:cover;display:block;border-right:1px solid #7E3AF2}
+.mp-info{padding:16px 18px}
+.mp-info h3{margin:10px 0 8px;font-size:20px;line-height:1.3;color:#1a1a1a}
+.mp-info p{margin:0;font-size:13px;line-height:1.7;color:#444}
+@media (max-width:720px){.mp-profile{flex-direction:column}.mp-face{flex:none;width:100%}.mp-face img{min-height:0;height:220px;border-right:0;border-bottom:1px solid #7E3AF2}}
 </style>
 <section class="mp-top" aria-label="레이싱 포스터 아카이브">
   <div class="wrap">
+    <div class="mp-profile">
+      <figure class="mp-face"><img src="img/profile_face.jpg" alt="정승원 프로필 사진" loading="eager"></figure>
+      <div class="mp-info">
+        <span class="mp-id">PROFILE</span>
+        <h3>정승원 · Seung won Jeong</h3>
+        <p>차량 진단·평가, 전기차 정비, ADAS 테스트를 목표로 합니다.<br>자동차진단평가사 2급(2026.10) · 자동차정비산업기사 과정(2027.02 예정)<br>부산 북구 거주 · 부산·김해·창원·경주 근무 가능</p>
+      </div>
+    </div>
     <div class="mp-head"><span>ARCHIVE · 01—03</span><span class="mp-rule"></span></div>
     <div class="mp-grid">
       <figure class="mp-card">
