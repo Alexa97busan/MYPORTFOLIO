@@ -26,16 +26,42 @@
 
 <main>
 
-<!-- HERO TOP -->
-<div class="hero" style="padding-bottom:0">
+<!-- HERO TOP (poster archive style) -->
+<style>
+.mp-top{background:#fff;color:#1a1a1a;padding:28px 0 12px;border-bottom:1px solid #7E3AF2}
+.mp-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:#1a1a1a}
+.mp-rule{flex:1;height:1px;background:#7E3AF2}
+.mp-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #7E3AF2}
+.mp-card{margin:0;position:relative;overflow:hidden;background:#f1f1f4;border-right:1px solid #7E3AF2}
+.mp-card:last-child{border-right:0}
+.mp-media{aspect-ratio:3/4;overflow:hidden}
+.mp-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.mp-card:hover .mp-media img{transform:scale(1.04)}
+.mp-cap{padding:10px 12px 12px;border-top:1px solid #7E3AF2;background:#fff}
+.mp-id{display:inline-block;background:#FFC400;color:#111;font:700 11px/1 ui-monospace,monospace;padding:4px 6px}
+.mp-cap b{display:block;margin-top:8px;font-size:13px;line-height:1.35;color:#1a1a1a}
+.mp-cap em{display:block;margin-top:4px;font-style:normal;font-size:11px;color:#6b6b72}
+@media (max-width:720px){.mp-grid{grid-template-columns:1fr}.mp-card{border-right:0;border-bottom:1px solid #7E3AF2}.mp-card:last-child{border-bottom:0}.mp-media{aspect-ratio:4/3}}
+</style>
+<section class="mp-top" aria-label="레이싱 포스터 아카이브">
   <div class="wrap">
-    <div class="hero-strip" data-reveal aria-label="레이싱 사진">
-      <figure><img src="img/hero_calsonic.jpg" alt="Calsonic 닛산 GT-R 레이스카와 드라이버" loading="eager" data-zoom></figure>
-      <figure><img src="img/hero_flag.jpg" alt="스페인 국기를 든 팀 피트 앞 Renault F1 차량" loading="eager" data-zoom></figure>
-      <figure><img src="img/hero_elf.jpg" alt="Renault F1 차량 전면 elf 리버리" loading="eager" data-zoom></figure>
+    <div class="mp-head"><span>ARCHIVE · 01—03</span><span class="mp-rule"></span></div>
+    <div class="mp-grid">
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_calsonic.jpg" alt="Calsonic 닛산 GT-R 레이스카와 드라이버 두 명" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">01</span><b>Calsonic Nissan GT-R (#12)</b><em>레이스카 · 드라이버 2인</em></figcaption>
+      </figure>
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_flag.jpg" alt="스페인 국기를 든 팀 피트 앞 Renault F1 차량" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">02</span><b>Renault F1 · Spanish Flag</b><em>스페인 국기와 팀 응원 장면</em></figcaption>
+      </figure>
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_elf.jpg" alt="Renault F1 차량 전면 elf 리버리" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">03</span><b>Renault F1 · Elf Livery</b><em>차량 전면 · 리버리 디테일</em></figcaption>
+      </figure>
     </div>
   </div>
-</div>
+</section>
 
 <!-- HERO -->
 <div class="hero">
