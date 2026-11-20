@@ -67,6 +67,10 @@ section{padding:56px 0;position:relative}
 .nav a{color:var(--ink);text-decoration:none;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;transition:background .2s,color .2s}
 .nav a:hover,.nav a:focus-visible{background:var(--ink);color:#fff;outline:none}
 .progress{position:absolute;left:0;bottom:-2px;height:2px;background:var(--amber);width:0}
+/* 한영 전환 키 (index.html ↔ index_en.html) */
+.lang-switch{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:32px;padding:6px 10px;border:1px solid var(--ink);background:#fff;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:900;font-size:12px;letter-spacing:.06em;transition:background .2s,color .2s,transform .15s}
+.lang-switch:hover,.lang-switch:focus-visible{background:var(--ink);color:#fff;outline:none}
+.lang-switch:active{transform:translateY(1px)}
 
 /* hero: white glow over the grey gradient */
 .hero{padding:64px 0 48px;color:var(--ink);position:relative;overflow:hidden}

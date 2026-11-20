@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seung won Jeong Portfolio · Translating complex vehicle data into intuitive language</title>
+<meta name="description" content="Seung won Jeong portfolio. A list of my self-built OBD2 dashboard, maintenance study sites, and deployed web tools.">
+<link rel="stylesheet" href="motorsport.css">
+<link rel="alternate" hreflang="ko" href="index.html">
+<link rel="alternate" hreflang="en" href="index_en.html">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">Seung won Jeong</div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#s1">01 Problem</a>
+      <a href="#s2">02 OBD2</a>
+      <a href="#s3">03 Study</a>
+      <a href="#s4">04 Feedback</a>
+      <a href="#s5">05 Plans</a>
+      <a href="#s6">06 Tools</a>
+    </nav>
+    <a class="lang-switch" href="index.html" lang="ko" hreflang="ko" aria-label="한국어 버전으로 보기">KO</a>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<!-- HERO TOP (poster archive style) -->
+<style>
+.mp-top{background:#fff;color:#1a1a1a;padding:28px 0 12px;border-bottom:1px solid #7E3AF2}
+.mp-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:#1a1a1a}
+.mp-rule{flex:1;height:1px;background:#7E3AF2}
+.mp-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #7E3AF2}
+.mp-card{margin:0;position:relative;overflow:hidden;background:#f1f1f4;border-right:1px solid #7E3AF2}
+.mp-card:last-child{border-right:0}
+.mp-media{aspect-ratio:3/4;overflow:hidden}
+.mp-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.mp-card:hover .mp-media img{transform:scale(1.04)}
+.mp-cap{padding:10px 12px 12px;border-top:1px solid #7E3AF2;background:#fff}
+.mp-id{display:inline-block;background:#FFC400;color:#111;font:700 11px/1 ui-monospace,monospace;padding:4px 6px}
+.mp-cap b{display:block;margin-top:8px;font-size:13px;line-height:1.35;color:#1a1a1a}
+.mp-cap em{display:block;margin-top:4px;font-style:normal;font-size:11px;color:#6b6b72}
+@media (max-width:720px){.mp-grid{grid-template-columns:1fr}.mp-card{border-right:0;border-bottom:1px solid #7E3AF2}.mp-card:last-child{border-bottom:0}.mp-media{aspect-ratio:4/3}}
+.mp-profile{display:flex;gap:0;border:1px solid #7E3AF2;background:#fff;margin-bottom:14px}
+.mp-face{margin:0;flex:0 0 180px;width:180px}
+.mp-face img{width:100%;height:100%;min-height:200px;object-fit:cover;display:block;border-right:1px solid #7E3AF2}
+.mp-info{padding:16px 18px}
+.mp-info h3{margin:10px 0 8px;font-size:20px;line-height:1.3;color:#1a1a1a}
+.mp-info p{margin:0;font-size:13px;line-height:1.7;color:#444}
+@media (max-width:720px){.mp-profile{flex-direction:column}.mp-face{flex:none;width:100%}.mp-face img{min-height:0;height:220px;border-right:0;border-bottom:1px solid #7E3AF2}}
+</style>
+<section class="mp-top" aria-label="Racing poster archive">
+  <div class="wrap">
+    <div class="mp-profile">
+      <figure class="mp-face"><img src="img/profile_face.jpg" alt="Seung won Jeong profile photo" loading="eager"></figure>
+      <div class="mp-info">
+        <span class="mp-id">PROFILE</span>
+        <h3>Seung won Jeong</h3>
+        <p>Aiming for vehicle diagnosis and evaluation, EV maintenance, and ADAS testing.<br>Automobile Diagnostic Evaluator Grade 2 (Oct 2026) · Automobile Maintenance Industrial Engineer course (expected Feb 2027)<br>Lives in Buk-gu, Busan · Available to work in Busan, Gimhae, Changwon, and Gyeongju</p>
+      </div>
+    </div>
+    <div class="mp-head"><span>ARCHIVE · 01—03</span><span class="mp-rule"></span></div>
+    <div class="mp-grid">
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_sonic.jpg" alt="Sega Dreamcast Sonic Adventure poster (1998)" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">01</span><b>Sonic Adventure · Dreamcast</b><em>SEGA poster · 1998</em></figcaption>
+      </figure>
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_flag.jpg" alt="Renault F1 car in front of the team pit holding a Spanish flag" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">02</span><b>Renault F1 · Spanish Flag</b><em>Spanish flag and team celebration</em></figcaption>
+      </figure>
+      <figure class="mp-card">
+        <div class="mp-media"><img src="img/hero_elf.jpg" alt="Front of a Renault F1 car in the elf livery" loading="eager" data-zoom></div>
+        <figcaption class="mp-cap"><span class="mp-id">03</span><b>Renault F1 · Elf Livery</b><em>Car front · livery details</em></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-strip" data-reveal aria-label="Photos of car equipment">
+      <figure><img src="img/strip_01.jpg" alt="Car engine photo 1" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_02.jpg" alt="Car suspension photo" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_03.jpg" alt="Car exterior photo" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_04.jpg" alt="Work equipment and textbook photo" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_05.jpg" alt="Car engine photo 2" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_06.jpg" alt="OBD2 scanner photo" loading="eager" data-zoom></figure>
+      <figure><img src="img/strip_07.jpg" alt="Car engine bay photo" loading="eager" data-zoom></figure>
+    </div>
+  </div>
+  <div class="wrap hero-grid">
+    <div data-reveal>
+      <span class="kicker">PORTFOLIO</span>
+      <h1>Translating complex vehicle data into intuitive language</h1>
+      <p class="lead" style="margin-top:14px">A record of turning hard-to-read fault codes and vehicle signals into intuitive dashboards, and building fragmented maintenance knowledge into a systematic study tool.</p>
+      <div class="stats">
+        <div class="stat"><b class="count" data-count="17">0</b><span>Self-developed tools and websites</span></div>
+        <div class="stat"><b class="count" data-count="12000">0</b><span>Fault codes processed</span></div>
+        <div class="stat"><b><span class="count" data-count="14">0</span>/15</b><span>Study members who passed after sharing the tools</span></div>
+      </div>
+      <p class="meta">Name: Seung won Jeong · Written: 2026-11-14</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <a class="btn" href="#s2">View OBD2 project</a>
+        <a class="btn ghost" href="#s6">View tool list</a>
+      </div>
+    </div>
+    <figure class="hero-visual" data-reveal>
+      <img src="img/obd_gauge.png" alt="Grandeur Hybrid OBD2 dashboard on a MacBook screen: speedometer, RPM gauge, and vehicle data panel" loading="eager" data-zoom>
+      <figcaption>Fig. 1. Self-developed OBD2 dashboard interface (speed, RPM, and vehicle data live-linked)</figcaption>
+    </figure>
+  </div>
+
+<div class="wrap maint" data-reveal>
+  <p class="maint-title">Me at work · Real maintenance photos and videos</p>
+  <div class="maint-grid">
+    <figure><img src="img/maint_01.jpg" alt="Maintenance work photo 1" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_02.jpg" alt="Maintenance work photo 2" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_03.jpg" alt="Maintenance work photo 3" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_04.jpg" alt="Maintenance work photo 4" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_05.jpg" alt="Maintenance work photo 5" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_06.jpg" alt="Maintenance work photo 6" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_07.jpg" alt="Maintenance work photo 7" loading="lazy" data-zoom></figure>
+    <figure><img src="img/maint_08.jpg" alt="Maintenance work photo 8" loading="lazy" data-zoom></figure>
+    <figure><video src="img/maint_video.mp4" poster="img/maint_video_poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Maintenance work video"></video></figure>
+    <figure><video src="img/maint_video_2.mp4" poster="img/maint_video_2_poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Maintenance work video 2"></video></figure>
+    <figure><video src="img/maint_video_3.mp4" poster="img/maint_video_3_poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Maintenance work video 3"></video></figure>
+    <figure><video src="img/maint_video_4.mp4" poster="img/maint_video_4_poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Maintenance work video 4"></video></figure>
+    <figure><video src="img/maint_video_5.mp4" poster="img/maint_video_5_poster.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Maintenance work video 5" style="aspect-ratio:16/9"></video></figure>
+  </div>
+</div>
+</div>
+
+<div class="poster-strip" aria-label="Motorsport poster series">
+  <figure><img src="poster/p1-audi.jpg" alt="1993 Audi 80 Quattro DTM poster"><figcaption>Audi '93</figcaption></figure>
+  <figure><img src="poster/p2-calsonic.jpg" alt="1994 Calsonic Nissan GT-R R32 poster"><figcaption>Calsonic '94</figcaption></figure>
+  <figure><img src="poster/p3-rsr.jpg" alt="1997 RS-R Nissan Silvia S14 poster"><figcaption>RS★R '97</figcaption></figure>
+  <figure><img src="poster/p4-skyline.jpg" alt="1996 ZEXEL Nissan Skyline GT-R poster"><figcaption>Skyline '96</figcaption></figure>
+  <figure><img src="poster/p5-jun.jpg" alt="1996 JUN Auto Mechanic R33 poster"><figcaption>JUN '96</figcaption></figure>
+</div>
+
+<!-- 01 -->
+<section id="s1">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">01 · Problem statement</span>
+      <h2>A fault code is a starting point, but it does not tell you the cause</h2>
+    </div>
+    <div data-reveal>
+      <p>In the shop, a fault code is the starting point for finding a cause. But a single code can point to several causes, so you need to check the order in which the actual signals changed.</p>
+      <p>I wanted to show this checking process on a vehicle data screen. I believed that if a person could see the values a car sends at a glance, they could narrow down cause candidates while reading the data alongside maintenance knowledge.</p>
+    </div>
+    <div class="q" data-reveal>
+      <small>The question this project asks</small>
+      Can the data a vehicle sends be turned into words a technician can understand immediately?
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="s2" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">02 · OBD2 project</span>
+      <h2>Grandeur Hybrid OBD2 Dashboard</h2>
+      <p class="lead" style="margin-top:10px">A personal project that reads values from the car's OBD2 port and shows them on a MacBook screen. The speedometer, RPM gauge, and sensor values are arranged on one screen.</p>
+    </div>
+
+    <div class="two" style="grid-template-columns:1fr">
+      <div class="layer card" data-reveal>
+        <dl class="spec">
+          <dt>Role</dt><dd>Planned and built solo</dd>
+          <dt>Screen layout</dt><dd>Speedometer · RPM gauge · sensor value panel</dd>
+          <dt>Data</dt><dd>About 12,000 fault codes processed</dd>
+          <dt>Connection</dt><dd>Bluetooth BLE</dd>
+        </dl>
+        <p style="margin-top:16px"><a class="btn ghost" href="https://youtube.com/shorts/UOFy1AEICnU" target="_blank" rel="noopener">▶ Watch demo video (YouTube)</a></p>
+      </div>
+    </div>
+
+    <h3 style="margin:36px 0 14px" data-reveal>Dashboard and the real vehicle cluster</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_app_1.jpg" alt="OBD2 dashboard program dashboard screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 1. Dashboard screen (program running)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_cluster.png" alt="Hybrid screen on a real vehicle instrument cluster" loading="lazy" data-zoom>
+        <figcaption>Fig. 2. Real vehicle instrument cluster (hybrid screen)</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>Actual program screens (high-resolution captures)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_app_1.jpg" alt="OBD2 dashboard program, actual screen 1" loading="lazy" data-zoom>
+        <figcaption>Fig. 3. Actual program screen (1)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_app_2.jpg" alt="OBD2 dashboard program, actual screen 2" loading="lazy" data-zoom>
+        <figcaption>Fig. 4. Actual program screen (2)</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>Theme screens and fault code lookup (high-resolution captures)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_nsx.jpg" alt="OBD program NSX-R Carbon theme screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 5. Theme 'NSX-R Carbon' screen</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_80s.jpg" alt="OBD program 80s LCD theme screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 6. Theme '80s LCD' screen</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_typer.jpg" alt="OBD program Type R White theme screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 7. Theme 'Type R White' screen</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_80s_dtc.jpg" alt="80s LCD theme screen showing fault code P0420" loading="lazy" data-zoom>
+        <figcaption>Fig. 8. Fault code lookup result (80s LCD, P0420)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_jgtc_dtc.jpg" alt="JGTC dial theme screen showing fault code P0420" loading="lazy" data-zoom>
+        <figcaption>Fig. 9. Fault code lookup result (JGTC Dial, P0420)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_theme_lancia_dtc.jpg" alt="Lancia Blue theme screen showing fault code P0420" loading="lazy" data-zoom>
+        <figcaption>Fig. 10. Fault code lookup result (Lancia Blue, P0420)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/obd_apps.png" alt="OBD program launch app icon" loading="lazy" data-zoom>
+        <figcaption>Fig. 11. Program launch app icon</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>Connection process: I checked the causes one at a time</h3>
+    <p class="muted" data-reveal>At first I thought the car would connect to the MacBook as soon as I plugged in the OBD2 connector. But it connected neither on the MacBook nor in the dashboard program.</p>
+    <ol class="steps" style="margin-top:16px" data-reveal>
+      <li>Instead of repeating the same method, I separated the possible causes into the connector, the MacBook, and the program.</li>
+      <li>I asked a teammate from the same team who has maintenance experience for advice. They said the MacBook needs a compatible dedicated OBD connector.</li>
+      <li>I switched the connection method to Bluetooth BLE, and both the MacBook and the program connected normally.</li>
+    </ol>
+    <div class="card" style="margin-top:8px" data-reveal>
+      <p style="margin:0">Changing the method was not abandoning the plan. It was a choice to keep the goal of checking vehicle data on screen.</p>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>Result: I checked fault codes using a test vehicle</h3>
+    <div class="two" data-reveal>
+      <div class="card gauge-demo" style="justify-content:space-around">
+        <div>
+          <div class="rpm" id="rpm" style="--p:0"><span><span id="rpmVal">0</span><small>RPM × 1000</small></span></div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <p class="muted" style="margin-bottom:6px">You can change the value with the RPM gauge slider.</p>
+          <input type="range" id="rpmRange" min="0" max="7" step="0.1" value="0" aria-label="RPM control" style="width:100%;accent-color:var(--accent)">
+        </div>
+      </div>
+      <div class="card">
+        <p style="margin-bottom:6px"><b>I intentionally caused a fault in a test vehicle, then read the fault code.</b></p>
+        <p class="muted">The engine fault code was read in one go. I also processed about 12,000 fault code data entries.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div><span class="tag green">Confirmed fault</span><br><b>Engine fault code read in one go</b></div>
+          <div><span class="tag">Input data</span><br><b class="count"><span data-count="12000">0</span> fault codes</b></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:40px 0 14px" data-reveal>Next step: I am designing navigation (in progress)</h3>
+    <div class="card" data-reveal>
+      <p>I wrote a design document for current location display, destination search, and route guidance. <b>This is a plan that is not yet implemented.</b></p>
+      <ul class="checks">
+        <li>Location source: Wi-Fi location on a MacBook has large errors while driving, so I am first considering linking to smartphone GPS.</li>
+        <li>Speed cross-check: I compare GPS speed with OBD2 speed to prepare for GPS errors in tunnels or downtown areas.</li>
+        <li>Minimal interaction while driving: large-text guidance and voice only; destination input is allowed only when stopped.</li>
+      </ul>
+      <p class="muted" style="margin:14px 0 6px">Stage progress (planned)</p>
+      <div class="bar amber" style="--w:20%"><span data-w="20%"></span></div>
+      <p class="muted" style="font-size:14px;margin:0">Stage 1 of 5: map display and the current location marker were set as the starting stage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">03 · Study site</span>
+      <h2>A study tool that explains wrong answers with pictures</h2>
+      <p class="lead" style="margin-top:10px">Reading explanations alone did not make it clear how the devices move. So I built a site that automatically shows an image explanation when you get a question wrong.</p>
+    </div>
+
+    <div class="study">
+      <article class="layer card" data-reveal>
+        <span class="tag">Self-made · Deployed</span> <span class="tag purple">Maintenance Industrial Engineer</span>
+        <h3 style="margin:8px 0 6px">Maintenance past-exam notes</h3>
+        <p>I added structure diagrams (MDPS motor location) and a photo gallery, and made wrong questions return in a review queue. On the study home, you can see proficiency by area and the number of questions waiting for review at a glance.</p>
+        <div class="shot-row" style="margin-top:14px">
+          <figure class="shot"><img src="img/note_home.png" alt="Maintenance past-exam notes study home: proficiency by area and questions to review" loading="lazy" data-zoom><figcaption>Study home (proficiency by area, review queue)</figcaption></figure>
+          <figure class="shot"><img src="img/note_study.png" alt="Question solving screen: mixture ratio and emissions graph" loading="lazy" data-zoom><figcaption>Question solving (mixture ratio and emissions graph)</figcaption></figure>
+          <figure class="shot"><img src="img/note_structure.png" alt="Structure diagram: MDPS motor location" loading="lazy" data-zoom><figcaption>Structure diagram (MDPS motor location)</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="layer card" data-reveal>
+        <span class="tag">Self-made · Deployed</span> <span class="tag purple">Maintenance Industrial Engineer</span>
+        <h3 style="margin:8px 0 6px">Maintenance Industrial Engineer past-exam solutions</h3>
+        <p>Choose questions by subject, and see the original question image together with a 3D explanation. Wrong answers and review statistics are collected automatically, so questions come back for review without organizing them yourself.</p>
+        <div class="shot-row" style="margin-top:14px">
+          <figure class="shot"><img src="img/dr_cockpit.png" alt="Maintenance Industrial Engineer past-exam solution site screen" loading="lazy" data-zoom><figcaption>Question solving screen by subject</figcaption></figure>
+        </div>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:24px" data-reveal>
+      <p style="margin-bottom:6px"><b>After sharing with classmates, 14 of 15 passed the Automobile Diagnostic Evaluator Grade 2 written exam.</b></p>
+      <p class="muted" style="margin:0">This cannot be concluded to be the effect of the site alone. But I learned that what is needed is a study tool where you can check the principles directly, rather than memorize answers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="s4" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">04 · Reflecting user feedback</span>
+      <h2>I turned a user's wish for a paper book into features</h2>
+      <p class="lead" style="margin-top:10px">A user said their eyes were tired and they could not look at a screen for long, so they would study with a paper book. I did not argue. I asked what was inconvenient and divided the feedback into items.</p>
+    </div>
+
+    <div class="reflect">
+      <div class="card" data-reveal><span class="tag amber">Change 1</span><h3>Dark mode</h3><p class="muted">Added so the brightness can be adjusted to suit your eyes.</p></div>
+      <div class="card" data-reveal><span class="tag amber">Change 2</span><h3>Font size control</h3><p class="muted">Users who find it hard to read for long can adjust the text size.</p></div>
+      <div class="card" data-reveal><span class="tag green">Result</span><h3>Tablet over paper</h3><p class="muted">They reported spending more time looking at tablet screens than paper.</p></div>
+    </div>
+
+    <div class="demo" data-reveal aria-label="Dark mode and font size trial">
+      <div class="demo-controls">
+        <label><input type="checkbox" id="darkToggle"> Turn on dark mode</label>
+        <label>Font size <input type="range" id="fsRange" min="15" max="24" value="17" aria-label="Font size"> <span id="fsVal">17</span>px</label>
+      </div>
+      <div class="demo-text" id="demoText">
+        <h4>Trial paragraph (example sentence)</h4>
+        <p>As the air-fuel mixture becomes lean, combustion temperature can rise and nitrogen oxides (NOx) can increase. Enlarge this paragraph or darken it to find the setting that suits your eyes.</p>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:18px">This cannot be concluded to be the effect of the site alone. The same user reported passing both the written and practical exams for Automobile Diagnostic Evaluator Grade 2.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="wrap two" style="grid-template-columns:1fr">
+    <div data-reveal>
+      <span class="kicker">05 · What I learned and plans</span>
+      <h2 style="margin-bottom:18px">I learned to check causes one at a time, and to turn other people's opinions into features</h2>
+      <ul class="plan" style="margin:0">
+        <li>When a problem occurs, I do not repeat the same method; I check the causes one at a time.</li>
+        <li>I learned that what is needed is a tool that lets you check the principles, not memorize answers.</li>
+        <li>I believe growing together means first understanding other people's opinions, then turning them into features people can actually use.</li>
+      </ul>
+    </div>
+    <div class="card" data-reveal>
+      <h3 style="margin-bottom:10px">Things I want to do next</h3>
+      <ul class="checks">
+        <li>Learn how to organize sensor data easily, and how to connect an AI model to vehicle data</li>
+        <li>Learn to build a process that explains fault cause candidates with supporting evidence</li>
+        <li>Build a diagnostic explanation prototype that connects fault data with maintenance materials</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6" style="background:var(--card)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">06 · Tools and websites I built</span>
+      <h2>Full list of deployed tools and sites</h2>
+      <p class="lead" style="margin-top:10px">Tools you can open directly by web address can be opened by tapping their card.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Category filter" data-reveal>
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="study" aria-pressed="false">Study</button>
+      <button type="button" data-filter="web" aria-pressed="false">Websites · Tools</button>
+      <button type="button" data-filter="app" aria-pressed="false">Hosted apps</button>
+      <button type="button" data-filter="car" aria-pressed="false">Vehicle data</button>
+    </div>
+
+    <div class="tools" id="tools">
+
+      <!-- Featured work -->
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/GreenAicarmechanic1020/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/note_home.png" alt="Maintenance past-exam notes study home screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Maintenance Past-Exam Notes</h3><p>Past-exam practice, image explanations for wrong answers, structure diagrams, and a photo gallery</p><ul class="psr"><li><b>Problem</b>While studying maintenance past exams, the principles were written only as text, so how the devices work was not clear.</li><li><b>Solution</b>Automatically show image explanations that match wrong questions, and include a structure diagram (MDPS motor location) and an emissions graph.</li><li><b>Result</b>On the study home, you can see the number of questions waiting for review and proficiency by area at a glance.</li></ul><span class="open">Open →</span><span class="addr">alexa97busan.github.io/GreenAicarmechanic1020/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/dr_cockpit_web/web/index.html" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/dr_cockpit.png" alt="Maintenance Industrial Engineer past-exam solution screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Maintenance Industrial Engineer Past-Exam Solutions</h3><p>Subject-by-subject practice, original images, 3D explanations, and review statistics</p><ul class="psr"><li><b>Problem</b>If you only read the explanations, it was hard to see why the answer was correct.</li><li><b>Solution</b>Choose questions by subject, and show the original images and 3D explanations together.</li><li><b>Result</b>Wrong answers and review statistics gather automatically, so the questions come back without organizing review lists yourself.</li></ul><span class="open">Open →</span><span class="addr">alexa97busan.github.io/dr_cockpit_web/web/index.html</span></div>
+      </a>
+      <article class="tile" data-cat="study">
+        <div class="thumb"><img src="img/book_cover.jpg" alt="Cover of the study book I made for the Automobile Maintenance Industrial Engineer exam" loading="lazy" data-zoom></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Study book for Maintenance Industrial Engineer (self-made)</h3><p>A physical book I organized myself to prepare for the Automobile Maintenance Industrial Engineer exam. Inside pages, including the cover, table of contents, and engine structure diagrams, are shown in photos.</p><span class="open ghost">Physical book · view in photos</span><a class="open" href="book/book_body.pdf" target="_blank" rel="noopener">View complete PDF (148 pages) →</a><a class="open" href="book/book_cover.pdf" target="_blank" rel="noopener">View cover PDF →</a><div class="book-strip" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px"><img src="img/book_r25.jpg" alt="Study book inside page 1" loading="lazy" data-zoom><img src="img/book_engine.jpg" alt="Study book engine structure page" loading="lazy" data-zoom><img src="img/book_contents.jpg" alt="Study book table of contents page" loading="lazy" data-zoom><img src="img/book_photo_1.jpg" alt="Study book work photo 1" loading="lazy" data-zoom><img src="img/book_photo_2.jpg" alt="Study book work photo 2" loading="lazy" data-zoom></div></div>
+      </article>
+      <article class="tile featured" data-cat="car">
+        <span class="badge">Featured project</span>
+        <div class="thumb"><img src="img/obd_cluster.png" alt="Grandeur Hybrid OBD2 dashboard screen" loading="lazy"></div>
+        <div class="body"><span class="tag green">Vehicle data · MacBook app</span><h3>Grandeur Hybrid OBD2 Dashboard</h3><p>Shows OBD2 values as a speedometer, RPM gauge, and sensor panel. Processes about 12,000 fault codes.</p><ul class="psr"><li><b>Problem</b>The MacBook and the OBD2 Bluetooth connector did not connect.</li><li><b>Solution</b>I checked the causes one at a time across the connector, the MacBook, and the program, and changed the connection method to Bluetooth BLE.</li><li><b>Result</b>The MacBook and the program connected, showing speed, RPM gauge, and sensor values on one screen, and about 12,000 fault code entries were processed.</li></ul><a class="open" href="https://youtube.com/shorts/UOFy1AEICnU" target="_blank" rel="noopener">Watch demo video →</a><span class="addr">youtube.com/shorts/UOFy1AEICnU</span></div>
+      </article>
+      <a class="tile" data-cat="app" href="https://genai-app-dr-9100diagnosticconsole-1-178627094570-703848041581.us-central1.run.app/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/dr9180.png" alt="DR-9180 Diagnostic Console screen" loading="lazy" data-zoom></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>DR-9180 Diagnostic Console</h3><p>All-in-one automotive diagnostic web application</p><span class="open">Open →</span><span class="addr">Web app deployed on Cloud Run</span></div>
+      </a>
+
+      <details class="more" open>
+        <summary>More tools (study · web · hosted apps · vehicle data)</summary>
+        <div class="tools more-grid">
+      <a class="tile" data-cat="study" href="https://car-appraiser-study0902.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/appraiser.png" alt="Automobile Diagnostic Evaluator Grade 2 study site screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study · Mobile</span><h3>Automobile Diagnostic Evaluator Grade 2 Study Site</h3><p>Practice question site for the Grade 2 written exam</p><span class="open">Open →</span><span class="addr">car-appraiser-study0902.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/2025caraptest0901/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/carlab.png" alt="CarLab interactive automotive maintenance study screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>CarLab</h3><p>Interactive automotive maintenance study site</p><span class="open">Open →</span><span class="addr">alexa97busan.github.io/2025caraptest0901/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/engine-atlas/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/engine_car.jpg" alt="Renault Korea engine atlas, tabs by model" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Renault Korea Engine Atlas</h3><p>An engine information atlas, browsed by model and engine</p><span class="open">Open →</span><span class="addr">alexa97busan.github.io/engine-atlas/</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/sonata-6at-simulator/sonata-6at.html" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/sonata.png" alt="Sonata 6AT simulator screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Sonata 6AT Simulator</h3><p>A simulator that shows the shifting process of the Sonata 6AT</p><span class="open">Open →</span><span class="addr">alexa97busan.github.io/sonata-6at-simulator/sonata-6at.html</span></div>
+      </a>
+      <a class="tile" data-cat="study" href="https://alexa97busan.github.io/hunter-association/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/hunter.png" alt="Hunter Association website screen" loading="lazy"></div>
+        <div class="body"><span class="tag purple">Study</span><h3>Hunter Association Website</h3><p>Website of the Hunter Association</p><span class="open">Open →</span><span class="addr">alexa97busan.github.io/hunter-association/</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://alexa97busan.github.io/gemini-watermark-remover/" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/gemini.png" alt="Gemini watermark remover web tool screen" loading="lazy"></div>
+        <div class="body"><span class="tag teal">Web tool</span><h3>Gemini Watermark Remover</h3><p>A web tool that removes watermarks from images</p><span class="open">Open →</span><span class="addr">alexa97busan.github.io/gemini-watermark-remover/</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://rug-swipe-16549781.figma.site" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/drawn.jpg" alt="DRAWN from life design website screen" loading="lazy"></div>
+        <div class="body"><span class="tag teal">Website</span><h3>DRAWN from life</h3><p>A website that gathers and presents design work</p><span class="open">Open →</span><span class="addr">rug-swipe-16549781.figma.site</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://paintandbodycbtstudio1.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/paint_cbt.png" alt="Body And Painting CBT practice web app screen" loading="lazy"></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>Body And Painting CBT</h3><p>CBT (computer-based test) practice web app</p><span class="open">Open →</span><span class="addr">paintandbodycbtstudio1.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://recall-navigator-aid.lovable.app" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/autoexam.png" alt="AutoExam Grade 2 web app screen" loading="lazy"></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>AutoExam Grade 2</h3><p>Study web app for qualification exam preparation</p><span class="open">Open →</span><span class="addr">recall-navigator-aid.lovable.app</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://bodypanelmaster08.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/panel.png" alt="Auto Body Panel Master screen" loading="lazy"></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>Auto Body Panel Master</h3><p>Study web app on car body panels</p><span class="open">Open →</span><span class="addr">bodypanelmaster08.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://autocasefile-7bvr4vcu.manus.space" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/casefile.jpg" alt="AUTO CASE FILE case organization web app screen" loading="lazy"></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>AUTO CASE FILE</h3><p>Web app for organizing automotive case studies</p><span class="open">Open →</span><span class="addr">autocasefile-7bvr4vcu.manus.space</span></div>
+      </a>
+      <a class="tile" data-cat="car" href="https://obd2carmainten.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/obd_sim.png" alt="Virtual OBD simulator MFD-800 screen" loading="lazy"></div>
+        <div class="body"><span class="tag green">Vehicle data</span><h3>Virtual OBD Simulator (MFD-800)</h3><p>A simulator for checking OBD values virtually</p><span class="open">Open →</span><span class="addr">obd2carmainten.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="app" href="https://carmainver20807.ai.studio" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/advisor.png" alt="Vehicle maintenance advisor screen" loading="lazy"></div>
+        <div class="body"><span class="tag amber">Hosted app</span><h3>Vehicle Maintenance Advisor</h3><p>Web app that provides vehicle maintenance guidance</p><span class="open">Open →</span><span class="addr">carmainver20807.ai.studio</span></div>
+      </a>
+      <a class="tile" data-cat="web" href="https://service-879810949744.us-west1.run.app" target="_blank" rel="noopener">
+        <div class="thumb"><img src="img/fuel.jpg" alt="Driving cost calculator screen" loading="lazy"></div>
+        <div class="body"><span class="tag teal">Web tool</span><h3>Driving Cost Calculator</h3><p>A tool that calculates the cost of driving a vehicle</p><span class="open">Open →</span><span class="addr">service-879810949744.us-west1.run.app</span></div>
+      </a>
+      <article class="tile" data-cat="car">
+        <div class="thumb"><img src="img/video_main.jpg" alt="Video analysis tool main screen" loading="lazy"></div>
+        <div class="body"><span class="tag green">Vehicle data · Local</span><h3>Video Analysis Tool</h3><p>A tool that analyzes video files</p><span class="open ghost">Runs locally only</span><span class="addr none">Runs on a local server (no external address)</span></div>
+      </article>
+        </div>
+      </details>
+    </div>
+    <p class="local-note">※ Items such as the single-person household map and used car price research are data summaries rather than tools, so they are excluded from this list.</p>
+    <h3 style="margin:40px 0 14px" data-reveal>Video analysis tool screens (high-resolution captures)</h3>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/video_main.jpg" alt="Video analysis tool main screen (YouTube address input)" loading="lazy" data-zoom>
+        <figcaption>Fig. 12. Main screen: enter a YouTube address</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/video_result.jpg" alt="Video analysis tool result screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 13. Analysis result screen</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/video_rewrite.jpg" alt="Video analysis tool rewrite screen" loading="lazy" data-zoom>
+        <figcaption>Fig. 14. Rewrite screen: choose purpose and length</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">07 · Favorite cars and racing</span>
+      <h2>Renault F1 Team</h2>
+      <p class="lead" style="margin-top:10px">I enjoy looking at car structure, color, logos, and the details of the pit lane.</p>
+    </div>
+    <div class="gallery" data-reveal>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/f1_poster.jpg" alt="Fernando Alonso poster 'Fernando is faster than you'" loading="lazy" data-zoom>
+        <figcaption>Fig. 15. Racing poster</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/f1_mexico.jpg" alt="Renault F1 Team car seen from above" loading="lazy" data-zoom>
+        <figcaption>Fig. 16. Renault R25 seen from above (Team Spirit livery)</figcaption>
+      </figure>
+      <figure class="shot" data-zoom-wrap>
+        <img src="img/f1_mildseven.jpg" alt="Side view of a Mild Seven Renault car" loading="lazy" data-zoom>
+        <figcaption>Fig. 17. Mild Seven Renault car, side view</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Seung won Jeong Portfolio · Written 2026-11-14 · Name: Seung won Jeong</div>
+</footer>
+
+<dialog class="lb" id="lightbox" aria-label="Enlarged image view">
+  <div class="wrapper">
+    <button class="x" type="button" id="lbClose" aria-label="Close the image and return to the page">← Back ✕</button>
+    <img id="lbImg" src="" alt="">
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LOC = document.documentElement.lang === 'en' ? 'en-US' : 'ko-KR';
+
+  // Hover tilt: wrap children of cards/tiles/shots in a .tilt wrapper once (outer frame stays fixed)
+  document.querySelectorAll('.card,.tile,.shot').forEach(function(el){
+    if (el.querySelector(':scope > .tilt')) return;
+    var w = document.createElement('div');
+    w.className = 'tilt';
+    while (el.firstChild) w.appendChild(el.firstChild);
+    el.appendChild(w);
+  });
+
+  // scroll progress bar
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    if (bar) bar.style.width = p + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // reveal on scroll
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.15, rootMargin:'0px 0px -40px 0px'});
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // count-up
+  function countUp(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    if (reduce){ el.textContent = target.toLocaleString(LOC); return; }
+    var start = null, dur = 1200;
+    function step(ts){
+      if (!start) start = ts;
+      var t = Math.min((ts - start) / dur, 1);
+      var v = Math.round(target * (1 - Math.pow(1 - t, 3)));
+      el.textContent = v.toLocaleString(LOC);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  if ('IntersectionObserver' in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ countUp(e.target); cio.unobserve(e.target); }
+      });
+    }, {threshold:.6});
+    counters.forEach(function(el){ cio.observe(el); });
+  } else {
+    counters.forEach(function(el){ el.textContent = (parseInt(el.getAttribute('data-count'),10)||0).toLocaleString(LOC); });
+  }
+
+  // progress bars fill when visible
+  var fills = document.querySelectorAll('.bar span[data-w]');
+  if ('IntersectionObserver' in window && !reduce){
+    var bio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.style.width = e.target.getAttribute('data-w'); bio.unobserve(e.target); }
+      });
+    }, {threshold:.5});
+    fills.forEach(function(el){ bio.observe(el); });
+  } else {
+    fills.forEach(function(el){ el.style.width = el.getAttribute('data-w'); });
+  }
+
+  // RPM gauge demo
+  var rpm = document.getElementById('rpm'), rpmRange = document.getElementById('rpmRange'), rpmVal = document.getElementById('rpmVal');
+  function setRpm(v){
+    var n = parseFloat(v);
+    rpm.style.setProperty('--p', (n / 7) * 100);
+    rpmVal.textContent = n.toFixed(1);
+  }
+  if (rpmRange){
+    rpmRange.addEventListener('input', function(){ setRpm(this.value); });
+    setRpm(rpmRange.value);
+  }
+
+  // live demo: dark mode + font size
+  var dark = document.getElementById('darkToggle'), fs = document.getElementById('fsRange'), fsVal = document.getElementById('fsVal'), demo = document.getElementById('demoText');
+  if (dark && demo){
+    dark.addEventListener('change', function(){
+      if (this.checked){ demo.style.background = '#0c1118'; demo.style.color = '#e9eef5'; }
+      else { demo.style.background = ''; demo.style.color = ''; }
+    });
+  }
+  if (fs && demo){
+    fs.addEventListener('input', function(){
+      demo.style.setProperty('--fs', this.value + 'px');
+      fsVal.textContent = this.value;
+    });
+  }
+
+  // category filter
+  var filterBtns = document.querySelectorAll('[data-filter]');
+  var tiles = document.querySelectorAll('#s6 [data-cat]');
+  var more = document.querySelector('.more');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var f = this.getAttribute('data-filter');
+      filterBtns.forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      if (more && f !== 'all') more.open = true;
+      tiles.forEach(function(t){
+        var show = f === 'all' || t.getAttribute('data-cat') === f;
+        t.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  // lightbox
+  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+  document.querySelectorAll('img[data-zoom]').forEach(function(img){
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function(){
+      lbImg.src = this.getAttribute('src');
+      lbImg.alt = this.getAttribute('alt') || '';
+      if (lb.showModal) lb.showModal(); else lb.setAttribute('open','');
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click', function(){ lb.close(); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+})();
+</script>
+</body>
+</html>
