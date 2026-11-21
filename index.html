@@ -687,34 +687,66 @@
   var LOC = en ? 'en-US' : 'ko-KR';
   var fileName = en ? 'Seung-won_Jeong_Portfolio_EN.pdf' : 'Seung-won_Jeong_Portfolio_KO.pdf';
   var label = { idle: en ? 'Save PDF' : 'PDF 저장', busy: en ? 'Creating PDF…' : 'PDF 만드는 중…' };
+  var CAPTURE_W = 1280; // 레이아웃 폭(px)
+  var A4_PX = 718;      // A4 인쇄 가능 폭 190mm (96dpi 기준) — 복제본을 이 폭에 맞춰 축소 // A4 인쇄용 고정 폭(px): 화면 폭과 무관하게 같은 배치로 캡처
 
-  function done(){ btn.disabled = false; btn.textContent = label.idle; }
+  function restore(){ btn.disabled = false; btn.textContent = label.idle; }
+
+  // 본문을 고정 폭 복제본으로 만들어 캡처용 정리 (연출 상태 해제, 지연 이미지 로드, 영상은 포스터 이미지로)
+  function buildCapture(){
+    var box = document.createElement('div');
+    box.setAttribute('aria-hidden', 'true');
+    box.style.cssText = 'position:absolute;left:0;top:0;width:' + CAPTURE_W + 'px;background:#fff;z-index:-1;';
+    var clone = document.querySelector('main').cloneNode(true);
+    clone.style.cssText = 'width:' + CAPTURE_W + 'px;margin:0;padding:0;overflow:visible;transform:none;';
+    clone.querySelectorAll('[data-reveal]').forEach(function(el){
+      el.removeAttribute('data-reveal'); el.classList.add('in');
+      el.style.opacity = '1'; el.style.transform = 'none'; el.style.transition = 'none';
+    });
+    clone.querySelectorAll('[data-count]').forEach(function(el){
+      el.textContent = (parseInt(el.getAttribute('data-count'), 10) || 0).toLocaleString(LOC);
+    });
+    clone.querySelectorAll('.bar span[data-w]').forEach(function(el){
+      el.style.width = el.getAttribute('data-w');
+    });
+    clone.querySelectorAll('video').forEach(function(v){
+      var im = document.createElement('img');
+      im.src = v.getAttribute('poster') || ''; im.alt = '';
+      im.style.cssText = 'width:100%;height:auto;display:block;';
+      v.parentNode.replaceChild(im, v);
+    });
+    clone.querySelectorAll('img').forEach(function(img){ img.loading = 'eager'; img.removeAttribute('data-zoom'); });
+    box.appendChild(clone);
+    document.body.appendChild(box);
+    var waits = Array.prototype.map.call(clone.querySelectorAll('img'), function(img){
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+      return new Promise(function(res){ img.onload = img.onerror = res; });
+    });
+    return { box: box, clone: clone, ready: Promise.all(waits) };
+  }
 
   btn.addEventListener('click', function(){
     if (typeof window.html2pdf !== 'function') { window.print(); return; }
     btn.disabled = true;
     btn.textContent = label.busy;
-
-    // 캡처 전에 숨겨진 연출 상태를 모두 최종 상태로 맞춤
-    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
-    document.querySelectorAll('[data-count]').forEach(function(el){
-      el.textContent = (parseInt(el.getAttribute('data-count'), 10) || 0).toLocaleString(LOC);
-    });
-    document.querySelectorAll('.bar span[data-w]').forEach(function(el){
-      el.style.width = el.getAttribute('data-w');
-    });
-
-    window.html2pdf().set({
-      margin: [12, 10, 12, 10],
-      filename: fileName,
-      image: { type: 'jpeg', quality: 0.92 },
-      html2canvas: { scale: 1.25, useCORS: true, scrollY: 0, windowWidth: 1280 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['.card', '.tile', '.shot', '.stat'] }
-    }).from(document.querySelector('main')).save().then(done, function(err){
-      done();
-      console.error('PDF 생성 실패', err);
-      alert(en ? 'PDF creation failed. Please try again or use the browser print (Save as PDF).' : 'PDF 생성에 실패했습니다. 다시 시도하거나 브라우저 인쇄(PDF로 저장)를 이용해 주세요.');
+    var cap = buildCapture();
+    cap.ready.then(function(){
+      return window.html2pdf().set({
+        margin: 0,
+        filename: fileName,
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: { scale: 1.5, useCORS: true, x: 0, y: 0, scrollX: 0, scrollY: 0, windowWidth: CAPTURE_W, width: CAPTURE_W },
+        // 페이지 크기를 캡처 폭(px)과 1:1로 맞춰 축소·이동 없이 담는다 (높이는 A4 비율 근사)
+        jsPDF: { unit: 'px', format: [CAPTURE_W, Math.round(CAPTURE_W * 1.4142)], orientation: 'portrait', hotfixes: ['px_scaling'] },
+        pagebreak: { mode: ['css', 'legacy'], avoid: ['.card', '.tile', '.shot', '.stat'] }
+      }).from(cap.clone).save();
+    }).then(function(){
+      cap.box.remove(); restore();
+    }, function(err){
+      cap.box.remove(); restore();
+      console.error('PDF generation failed', err);
+      alert(en ? 'PDF creation failed. Please try again or use the browser print (Save as PDF).'
+               : 'PDF 생성에 실패했습니다. 다시 시도하거나 브라우저 인쇄(PDF로 저장)를 이용해 주세요.');
     });
   });
 })();
