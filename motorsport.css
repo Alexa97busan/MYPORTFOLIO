@@ -71,6 +71,12 @@ section{padding:56px 0;position:relative}
 .lang-switch{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:32px;padding:6px 10px;border:1px solid var(--ink);background:#fff;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:900;font-size:12px;letter-spacing:.06em;transition:background .2s,color .2s,transform .15s}
 .lang-switch:hover,.lang-switch:focus-visible{background:var(--ink);color:#fff;outline:none}
 .lang-switch:active{transform:translateY(1px)}
+/* PDF 저장 키 */
+.pdf-btn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:6px 10px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-family:var(--display);font-weight:900;font-size:12px;letter-spacing:.06em;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,transform .15s}
+.pdf-btn:hover,.pdf-btn:focus-visible{background:#fff;color:var(--ink);outline:none}
+.pdf-btn:active{transform:translateY(1px)}
+.pdf-btn:disabled{opacity:.6;cursor:progress}
+.topbar-tools{display:flex;align-items:center;gap:8px}
 
 /* hero: white glow over the grey gradient */
 .hero{padding:64px 0 48px;color:var(--ink);position:relative;overflow:hidden}

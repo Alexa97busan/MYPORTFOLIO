@@ -22,7 +22,10 @@
       <a href="#s5">05 계획</a>
       <a href="#s6">06 도구 목록</a>
     </nav>
-    <a class="lang-switch" href="index_en.html" lang="en" hreflang="en" aria-label="Switch to the English version" onclick="this.href='index_en.html'+location.hash">EN</a>
+    <div class="topbar-tools">
+      <a class="lang-switch" href="index_en.html" lang="en" hreflang="en" aria-label="Switch to the English version" onclick="this.href='index_en.html'+location.hash">EN</a>
+      <button type="button" class="pdf-btn" id="pdfBtn" aria-label="사이트를 PDF 파일로 저장">PDF 저장</button>
+    </div>
   </div>
   <div class="progress" id="progress"></div>
 </header>
@@ -671,6 +674,49 @@
   });
   document.getElementById('lbClose').addEventListener('click', function(){ lb.close(); });
   lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+})();
+</script>
+
+<!-- PDF 저장: html2pdf.js (로컬 번들). 불러오지 못하면 브라우저 인쇄(PDF로 저장)로 대체 -->
+<script src="js/html2pdf.bundle.min.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('pdfBtn');
+  if (!btn) return;
+  var en = document.documentElement.lang === 'en';
+  var LOC = en ? 'en-US' : 'ko-KR';
+  var fileName = en ? 'Seung-won_Jeong_Portfolio_EN.pdf' : 'Seung-won_Jeong_Portfolio_KO.pdf';
+  var label = { idle: en ? 'Save PDF' : 'PDF 저장', busy: en ? 'Creating PDF…' : 'PDF 만드는 중…' };
+
+  function done(){ btn.disabled = false; btn.textContent = label.idle; }
+
+  btn.addEventListener('click', function(){
+    if (typeof window.html2pdf !== 'function') { window.print(); return; }
+    btn.disabled = true;
+    btn.textContent = label.busy;
+
+    // 캡처 전에 숨겨진 연출 상태를 모두 최종 상태로 맞춤
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      el.textContent = (parseInt(el.getAttribute('data-count'), 10) || 0).toLocaleString(LOC);
+    });
+    document.querySelectorAll('.bar span[data-w]').forEach(function(el){
+      el.style.width = el.getAttribute('data-w');
+    });
+
+    window.html2pdf().set({
+      margin: [12, 10, 12, 10],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.92 },
+      html2canvas: { scale: 1.25, useCORS: true, scrollY: 0, windowWidth: 1280 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['.card', '.tile', '.shot', '.stat'] }
+    }).from(document.querySelector('main')).save().then(done, function(err){
+      done();
+      console.error('PDF 생성 실패', err);
+      alert(en ? 'PDF creation failed. Please try again or use the browser print (Save as PDF).' : 'PDF 생성에 실패했습니다. 다시 시도하거나 브라우저 인쇄(PDF로 저장)를 이용해 주세요.');
+    });
+  });
 })();
 </script>
 </body>

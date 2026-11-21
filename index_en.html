@@ -22,7 +22,10 @@
       <a href="#s5">05 Plans</a>
       <a href="#s6">06 Tools</a>
     </nav>
-    <a class="lang-switch" href="index.html" lang="ko" hreflang="ko" aria-label="한국어 버전으로 보기" onclick="this.href='index.html'+location.hash">KO</a>
+    <div class="topbar-tools">
+      <a class="lang-switch" href="index.html" lang="ko" hreflang="ko" aria-label="한국어 버전으로 보기" onclick="this.href='index.html'+location.hash">KO</a>
+      <button type="button" class="pdf-btn" id="pdfBtn" aria-label="Save the site as a PDF file">Save PDF</button>
+    </div>
   </div>
   <div class="progress" id="progress"></div>
 </header>
@@ -672,6 +675,49 @@
   });
   document.getElementById('lbClose').addEventListener('click', function(){ lb.close(); });
   lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
+})();
+</script>
+
+<!-- Save PDF: html2pdf.js (bundled locally). Falls back to the browser print dialog (Save as PDF) if it fails to load -->
+<script src="js/html2pdf.bundle.min.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('pdfBtn');
+  if (!btn) return;
+  var en = document.documentElement.lang === 'en';
+  var LOC = en ? 'en-US' : 'ko-KR';
+  var fileName = en ? 'Seung-won_Jeong_Portfolio_EN.pdf' : '정승원_포트폴리오.pdf';
+  var label = { idle: en ? 'Save PDF' : 'PDF 저장', busy: en ? 'Creating PDF…' : 'PDF 만드는 중…' };
+
+  function done(){ btn.disabled = false; btn.textContent = label.idle; }
+
+  btn.addEventListener('click', function(){
+    if (typeof window.html2pdf !== 'function') { window.print(); return; }
+    btn.disabled = true;
+    btn.textContent = label.busy;
+
+    // Bring every entrance animation and count-up to its final state before capture
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      el.textContent = (parseInt(el.getAttribute('data-count'), 10) || 0).toLocaleString(LOC);
+    });
+    document.querySelectorAll('.bar span[data-w]').forEach(function(el){
+      el.style.width = el.getAttribute('data-w');
+    });
+
+    window.html2pdf().set({
+      margin: [12, 10, 12, 10],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.92 },
+      html2canvas: { scale: 1.25, useCORS: true, scrollY: 0, windowWidth: 1280 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['.card', '.tile', '.shot', '.stat'] }
+    }).from(document.querySelector('main')).save().then(done, function(err){
+      done();
+      console.error('PDF generation failed', err);
+      alert('PDF creation failed. Please try again or use the browser print (Save as PDF).');
+    });
+  });
 })();
 </script>
 </body>
